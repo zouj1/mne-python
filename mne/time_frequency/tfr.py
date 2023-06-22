@@ -2310,6 +2310,9 @@ class AverageTFR(_BaseTFR):
         font_color="w",
         yscale="auto",
         verbose=None,
+        vline =(0.0,),
+        vline_color="w",
+        vline_linestyle = "--"
     ):
         """Plot TFRs in a topography with images.
 
@@ -2433,6 +2436,7 @@ class AverageTFR(_BaseTFR):
             yscale=yscale,
             cmap=(cmap, True),
             onselect=onselect_callback,
+            vline=vline
         )
         imshow = partial(
             _imshow_tfr_unified,
@@ -2440,6 +2444,9 @@ class AverageTFR(_BaseTFR):
             freq=freqs,
             cmap=cmap,
             onselect=onselect_callback,
+            vline=vline,
+            vline_color = vline_color,
+            vline_linestyle = vline_linestyle
         )
 
         fig = _plot_topo(
@@ -2461,6 +2468,9 @@ class AverageTFR(_BaseTFR):
             font_color=font_color,
             unified=True,
             img=True,
+            vline=vline,
+            vline_color = vline_color,
+            vline_linestyle = vline_linestyle
         )
 
         add_background_image(fig, fig_background)

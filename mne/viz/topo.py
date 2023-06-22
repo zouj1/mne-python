@@ -131,6 +131,9 @@ def _iter_topography(
     img=False,
     axes=None,
     legend=False,
+    vline = (0.0,),
+    vline_color=None,
+    vline_linestyle = None,
 ):
     """Iterate over topography.
 
@@ -218,6 +221,9 @@ def _iter_topography(
                 _mne_ch_name=name,
                 _mne_ch_idx=ch_idx,
                 _mne_ax_face_color=axis_facecolor,
+                vline = vline,
+                vline_color=vline_color,
+                vline_linestyle = vline_linestyle,
             )
             axs.append(ax)
     if not unified and legend:
@@ -271,6 +277,9 @@ def _plot_topo(
     unified=False,
     img=False,
     axes=None,
+    vline = None,
+    vline_color = None,
+    vline_linestyle = None
 ):
     """Plot on sensor layout."""
     import matplotlib.pyplot as plt
@@ -322,6 +331,9 @@ def _plot_topo(
         unified=unified,
         img=img,
         axes=axes,
+        vline = vline,
+        vline_color=vline_color,
+        vline_linestyle=vline_linestyle
     )
 
     for ax, ch_idx in my_topo_plot:
@@ -331,10 +343,10 @@ def _plot_topo(
         else:
             ylim_ = ylim
 
-        show_func(ax, ch_idx, tmin=tmin, tmax=tmax, vmin=vmin, vmax=vmax, ylim=ylim_)
+        show_func(ax, ch_idx, tmin=tmin, tmax=tmax, vmin=vmin, vmax=vmax, ylim=ylim_, vline = vline, vline_color=vline_color,vline_linestyle=vline_linestyle)
 
     if title is not None:
-        plt.figtext(0.03, 0.95, title, color=font_color, fontsize=15, va="top")
+        plt.figtext(0.03, 0.95, title, color=font_color, fontsize=15, va="top")  
 
     return fig
 
@@ -420,6 +432,9 @@ def _imshow_tfr(
     mask_alpha=0.1,
     is_jointplot=False,
     cnorm=None,
+    vline=None,
+    vline_color = None,
+    vline_linestyle = None
 ):
     """Show time-frequency map as two-dimensional image."""
     from matplotlib import pyplot as plt
@@ -459,6 +474,12 @@ def _imshow_tfr(
             ax.CB = DraggableColorbar(cbar, img)
     ax.RS = RectangleSelector(ax, onselect=onselect)  # reference must be kept
 
+    if vline:
+        plt.axvline(vline, 
+                    color=vline_color, 
+                    linewidth=0.2, 
+                    linestyle=vline_linestyle)
+
     return t_end
 
 
@@ -474,6 +495,8 @@ def _imshow_tfr_unified(
     tfr=None,
     freq=None,
     vline=None,
+    vline_color=None,
+    vline_linestyle = None,
     x_label=None,
     y_label=None,
     colorbar=False,
@@ -505,6 +528,18 @@ def _imshow_tfr_unified(
             cmap=cmap,
         )
     )
+
+    if vline:
+        vline = np.array(vline) * bn.x_s + bn.x_t
+        pos = bn.pos
+        ax.vlines(
+            vline,
+            pos[1],
+            pos[1] + pos[3],
+            color = vline_color,
+            linewidth=0.2,
+            linestyle=vline_linestyle,
+        )
 
 
 def _plot_timeseries(
