@@ -2436,8 +2436,10 @@ class AverageTFR(_BaseTFR):
             yscale=yscale,
             cmap=(cmap, True),
             onselect=onselect_callback,
-            vline=vline
-        )
+            vline=vline,
+            vline_color = vline_color,
+            vline_linestyle = vline_linestyle
+            )
         imshow = partial(
             _imshow_tfr_unified,
             tfr=data,
