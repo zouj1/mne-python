@@ -2311,8 +2311,11 @@ class AverageTFR(_BaseTFR):
         yscale="auto",
         verbose=None,
         vline =(0.0,),
-        vline_color="w",
-        vline_linestyle = "--"
+        vline_color="k",
+        vline_linestyle = "solid",
+        hline = None,
+        hline_color="k",
+        hline_linestyle = "dotted"
     ):
         """Plot TFRs in a topography with images.
 
@@ -2438,7 +2441,10 @@ class AverageTFR(_BaseTFR):
             onselect=onselect_callback,
             vline=vline,
             vline_color = vline_color,
-            vline_linestyle = vline_linestyle
+            vline_linestyle = vline_linestyle,
+            hline=hline,
+            hline_color = hline_color,
+            hline_linestyle = hline_linestyle
             )
         imshow = partial(
             _imshow_tfr_unified,
@@ -2448,7 +2454,10 @@ class AverageTFR(_BaseTFR):
             onselect=onselect_callback,
             vline=vline,
             vline_color = vline_color,
-            vline_linestyle = vline_linestyle
+            vline_linestyle = vline_linestyle,
+            hline=hline,
+            hline_color = hline_color,
+            hline_linestyle = hline_linestyle
         )
 
         fig = _plot_topo(
@@ -2472,7 +2481,10 @@ class AverageTFR(_BaseTFR):
             img=True,
             vline=vline,
             vline_color = vline_color,
-            vline_linestyle = vline_linestyle
+            vline_linestyle = vline_linestyle,
+            hline=hline,
+            hline_color = hline_color,
+            hline_linestyle = hline_linestyle
         )
 
         add_background_image(fig, fig_background)

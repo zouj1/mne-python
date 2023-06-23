@@ -134,6 +134,9 @@ def _iter_topography(
     vline = (0.0,),
     vline_color=None,
     vline_linestyle = None,
+    hline=None,
+    hline_color = None,
+    hline_linestyle = None
 ):
     """Iterate over topography.
 
@@ -224,6 +227,9 @@ def _iter_topography(
                 vline = vline,
                 vline_color=vline_color,
                 vline_linestyle = vline_linestyle,
+                hline=None,
+                hline_color = None,
+                hline_linestyle = None
             )
             axs.append(ax)
     if not unified and legend:
@@ -279,7 +285,10 @@ def _plot_topo(
     axes=None,
     vline = None,
     vline_color = None,
-    vline_linestyle = None
+    vline_linestyle = None,
+    hline=None,
+    hline_color = None,
+    hline_linestyle = None
 ):
     """Plot on sensor layout."""
     import matplotlib.pyplot as plt
@@ -301,6 +310,12 @@ def _plot_topo(
         ylim=ylim,
         x_label=x_label,
         y_label=y_label,
+        vline = None,
+        vline_color = None,
+        vline_linestyle = None,
+        hline=None,
+        hline_color = None,
+        hline_linestyle = None
     )
 
     if axes is None:
@@ -333,7 +348,10 @@ def _plot_topo(
         axes=axes,
         vline = vline,
         vline_color=vline_color,
-        vline_linestyle=vline_linestyle
+        vline_linestyle=vline_linestyle,
+        hline=None,
+        hline_color = None,
+        hline_linestyle = None
     )
 
     for ax, ch_idx in my_topo_plot:
@@ -434,7 +452,10 @@ def _imshow_tfr(
     cnorm=None,
     vline=None,
     vline_color = None,
-    vline_linestyle = None
+    vline_linestyle = None,
+    hline=None,
+    hline_color = None,
+    hline_linestyle = None
 ):
     """Show time-frequency map as two-dimensional image."""
     from matplotlib import pyplot as plt
@@ -504,6 +525,8 @@ def _imshow_tfr_unified(
     cmap="RdBu_r",
     title=None,
     hline=None,
+    hline_color = None,
+    hline_linestyle = None
 ):
     """Show multiple tfrs on topo using a single axes."""
     _compute_ax_scalings(bn, (tmin, tmax), (freq[0], freq[-1]))
@@ -539,6 +562,17 @@ def _imshow_tfr_unified(
             color = vline_color,
             linewidth=0.2,
             linestyle=vline_linestyle,
+        )
+    if hline:
+        hline = np.array(hline) * bn.y_s + bn.y_t
+        pos = bn.pos
+        ax.hlines(
+            hline,
+            pos[0],
+            pos[0] + pos[2],
+            color = hline_color,
+            linewidth=0.2,
+            linestyle=hline_linestyle,
         )
 
 
